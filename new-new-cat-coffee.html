@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAT COFFEE - European Café</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+            background: linear-gradient(rgba(255, 253, 248, 0.92), rgba(255, 253, 248, 0.92)),
+                        url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #4a3c31;
+            padding: 60px 40px;
+            line-height: 1.8;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(205, 133, 63, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 90, 43, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(218, 165, 32, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 253, 248, 0.88);
+            padding: 60px;
+            border-radius: 4px;
+            box-shadow:
+                0 2px 20px rgba(74, 60, 49, 0.08),
+                0 0 60px rgba(218, 165, 32, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e8dfd3;
+            position: relative;
+        }
+
+        .header::after {
+            content: '☕';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #faf8f5;
+            padding: 0 20px;
+            font-size: 1.5rem;
+        }
+
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            background: rgba(255, 253, 248, 0.95);
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(74, 60, 49, 0.1);
+        }
+
+        .lang-btn {
+            padding: 6px 16px;
+            border: 1px solid #c9a86c;
+            background: transparent;
+            color: #6b4423;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(201, 168, 108, 0.2);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
+            color: #faf8f5;
+            border-color: transparent;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 400;
+            color: #6b4423;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #9c7a5a;
+            letter-spacing: 2px;
+        }
+
+        .intro {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px 40px;
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.08) 0%, rgba(205, 133, 63, 0.05) 100%);
+            border-left: 3px solid #c9a86c;
+            border-right: 3px solid #c9a86c;
+            border-radius: 2px;
+        }
+
+        .intro p {
+            font-size: 1.15rem;
+            color: #5a4a3a;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(250, 248, 245, 0.6);
+            border-radius: 3px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #7a5a3a;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8dfd3;
+            font-weight: 400;
+            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::before {
+            content: '◆';
+            font-size: 0.8rem;
+            color: #c9a86c;
+        }
+
+        .menu-category {
+            margin-bottom: 35px;
+        }
+
+        .menu-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .menu-category-title {
+            font-size: 1.3rem;
+            color: #8b5a2b;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #d4c4b0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-category-title::before {
+            content: '✦';
+            color: #c9a86c;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .menu-item {
+            padding: 20px;
+            background: linear-gradient(145deg, #ffffff 0%, #faf8f5 100%);
+            border: 1px solid #e8dfd3;
+            border-radius: 3px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #c9a86c, #d4c4b0);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 90, 43, 0.12);
+            border-color: #c9a86c;
+        }
+
+        .menu-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .menu-item h3 {
+            font-size: 1.15rem;
+            color: #6b4423;
+            margin-bottom: 8px;
+            font-weight: 400;
+        }
+
+        .menu-item .price {
+            font-size: 1.3rem;
+            color: #c9a86c;
+            font-style: italic;
+        }
+
+        .menu-item .desc {
+            font-size: 0.85rem;
+            color: #9c7a5a;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .cafe-table {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 30px 0;
+            background: #fffefa;
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(74, 60, 49, 0.06);
+        }
+
+        .cafe-table thead {
+            display: table-header-group;
+        }
+
+        .cafe-table tbody {
+            display: table-row-group;
+        }
+
+        .cafe-table tr {
+            display: table-row;
+        }
+
+        .cafe-table th,
+        .cafe-table td {
+            display: table-cell;
+            width: 12.5%;
+            padding: 18px 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .cafe-table th {
+            background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
+            color: #faf8f5;
+            padding: 20px 10px;
+            font-weight: 400;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+        }
+
+        .cafe-table td {
+            color: #5a4a3a;
+            border-bottom: 1px solid #f0ebe3;
+        }
+
+        .cafe-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cafe-table tbody tr:nth-child(even) {
+            background-color: #faf8f5;
+        }
+
+        .cafe-table tbody tr:hover {
+            background-color: #f5efe6;
+        }
+
+        .cat-image {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cat-image img {
+            border-radius: 50%;
+            border: 4px solid #e8dfd3;
+            box-shadow: 0 8px 30px rgba(74, 60, 49, 0.15);
+            transition: all 0.4s ease;
+        }
+
+        .cat-image img:hover {
+            transform: scale(1.05);
+            border-color: #c9a86c;
+        }
+
+        .quote {
+            text-align: center;
+            margin: 50px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(139, 90, 43, 0.08) 0%, rgba(218, 165, 32, 0.05) 100%);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 5rem;
+            color: #c9a86c;
+            opacity: 0.3;
+            position: absolute;
+            top: 10px;
+            left: 30px;
+            font-family: Georgia, serif;
+        }
+
+        .quote p {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #6b5a4a;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-section {
+            margin: 40px 0;
+            padding: 35px;
+            background: linear-gradient(135deg, #faf8f5 0%, #f5efe6 100%);
+            border-radius: 3px;
+            border: 1px solid #e8dfd3;
+        }
+
+        .form-section h2 {
+            border-bottom: none;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #6b4423;
+            font-size: 1.1rem;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d4c4b0;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: #fffefa;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #c9a86c;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #5a4a3a;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
+            color: #faf8f5;
+            border: none;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 68, 35, 0.3);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 50px 0;
+            color: #c9a86c;
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .footer-link a {
+            color: #8b5a2b;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border: 2px solid #c9a86c;
+            border-radius: 3px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            background: #c9a86c;
+            color: #fffefa;
+        }
+
+        /* Hide inactive locale only — never force display:block on the visible row
+           or h2 / menu titles lose flex layout and links lose inline-block. */
+        body:not(.zh) [data-lang="zh"] {
+            display: none !important;
+        }
+
+        body.zh [data-lang="en"] {
+            display: none !important;
+        }
+
+        body.zh h1, body.zh h2 {
+            letter-spacing: 4px;
+        }
+                .footer-address {
+            text-align: center;
+            margin: 40px 0 20px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(139, 90, 43, 0.08) 0%, rgba(218, 165, 32, 0.05) 100%);
+            border-radius: 3px;
+            border: 1px solid #e8dfd3;
+        }
+
+        .footer-address h3 {
+            font-size: 1.2rem;
+            color: #8b5a2b;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .footer-address p {
+            font-size: 1rem;
+            color: #6b5a4a;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .footer-address .address-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+                .comments-section {
+            margin: 40px 0;
+            padding: 35px;
+            background: linear-gradient(135deg, #faf8f5 0%, #f5efe6 100%);
+            border-radius: 3px;
+            border: 1px solid #e8dfd3;
+        }
+
+        .comments-section h2 {
+            border-bottom: none;
+            margin-bottom: 25px;
+        }
+
+        .comment-form {
+            margin-bottom: 35px;
+            padding-bottom: 30px;
+            border-bottom: 1px dashed #d4c4b0;
+        }
+
+        .comment-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d4c4b0;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: #fffefa;
+            transition: border-color 0.3s ease;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: #c9a86c;
+        }
+
+        .comment-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .comment-form .submit-btn {
+            width: auto;
+            padding: 12px 40px;
+            background: linear-gradient(135deg, #8b5a2b 0%, #6b4423 100%);
+            color: #faf8f5;
+            border: none;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .comment-form .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 68, 35, 0.3);
+        }
+
+        .comments-list h3 {
+            font-size: 1.2rem;
+            color: #8b5a2b;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .comment-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 3px;
+            margin-bottom: 15px;
+            border-left: 3px solid #c9a86c;
+        }
+
+        .comment-item .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .comment-item .comment-author {
+            font-weight: 400;
+            color: #6b4423;
+            font-size: 1.1rem;
+        }
+
+        .comment-item .comment-date {
+            font-size: 0.85rem;
+            color: #9c7a5a;
+            font-style: italic;
+        }
+
+        .comment-item .comment-content {
+            color: #5a4a3a;
+            line-height: 1.6;
+        }
+
+        .no-comments {
+            text-align: center;
+            color: #9c7a5a;
+            font-style: italic;
+            padding: 30px;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 30px 0;
+        }
+
+        .table-scroll .cafe-table {
+            margin: 0;
+            min-width: 720px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <button class="lang-btn active" data-target-lang="en">EN</button>
+        <button class="lang-btn" data-target-lang="zh">中文</button>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 data-lang="en">Cat Coffee</h1>
+            <h1 data-lang="zh">猫咪咖啡馆</h1>
+            <p class="subtitle" data-lang="en">A Charming European-Style Café Where Cats Meet Coffee</p>
+            <p class="subtitle" data-lang="zh">一个迷人的欧式风格咖啡馆，猫咪与咖啡的完美邂逅</p>
+        </header>
+
+        <div class="divider">· · · · ·</div>
+
+        <div class="intro">
+            <p data-lang="en">Step into our cozy haven, where the aroma of freshly brewed coffee intertwines with the gentle purrs of our feline friends.</p>
+            <p data-lang="zh">走进我们温馨的港湾，新鲜咖啡的香气与猫咪轻柔的呼噜声交织在一起。</p>
+            <p data-lang="en">Experience the warmth of European café culture in every cup.</p>
+            <p data-lang="zh">在每一杯咖啡中体验欧式咖啡馆文化的温暖。</p>
+        </div>
+
+        <section class="section">
+            <h2 data-lang="en">Our Story</h2>
+            <h2 data-lang="zh">我们的故事</h2>
+            <p data-lang="en">Welcome to Cat Coffee, a unique European-inspired café where feline companionship meets artisan coffee. Our space is designed to evoke the intimate atmosphere of a classic Parisian café, complete with vintage decor and the soothing presence of our resident cats.</p>
+            <p data-lang="zh">欢迎来到猫咪咖啡馆，一个独特的欧式风格咖啡馆，猫咪的陪伴与手工咖啡完美结合。我们的空间设计旨在唤起经典巴黎咖啡馆的亲密氛围，配有复古装饰和我们可爱的猫咪住客。</p>
+            <p data-lang="en">We believe that a perfect cup of coffee is best enjoyed alongside the gentle comfort of a purring cat. Join us for an unforgettable experience that feeds both the soul and the senses.</p>
+            <p data-lang="zh">我们相信，一杯完美的咖啡最好在猫咪轻柔的陪伴下享用。加入我们，开启一场喂养灵魂和感官的难忘体验。</p>
+        </section>
+
+        <section class="section">
+            <h2 data-lang="en">Our Menu</h2>
+            <h2 data-lang="zh">我们的菜单</h2>
+
+            <div class="menu-category">
+                <div class="menu-category-title" data-lang="en">☕ Coffee</div>
+                <div class="menu-category-title" data-lang="zh">☕ 咖啡</div>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <h3 data-lang="en">Classic Espresso</h3>
+                        <h3 data-lang="zh">经典浓缩咖啡</h3>
+                        <p class="price">¥18</p>
+                        <p class="desc" data-lang="en">Rich & Bold</p>
+                        <p class="desc" data-lang="zh">浓郁醇香</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Cappuccino</h3>
+                        <h3 data-lang="zh">卡布奇诺</h3>
+                        <p class="price">¥25</p>
+                        <p class="desc" data-lang="en">Velvety Foam</p>
+                        <p class="desc" data-lang="zh">丝滑奶泡</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Vanilla Latte</h3>
+                        <h3 data-lang="zh">香草拿铁</h3>
+                        <p class="price">¥28</p>
+                        <p class="desc" data-lang="en">Sweet & Creamy</p>
+                        <p class="desc" data-lang="zh">甜蜜柔滑</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Caramel Macchiato</h3>
+                        <h3 data-lang="zh">焦糖玛奇朵</h3>
+                        <p class="price">¥30</p>
+                        <p class="desc" data-lang="en">Buttery Caramel</p>
+                        <p class="desc" data-lang="zh">焦糖黄油香</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Mocha Delight</h3>
+                        <h3 data-lang="zh">摩卡愉悦</h3>
+                        <p class="price">¥32</p>
+                        <p class="desc" data-lang="en">Chocolate & Coffee</p>
+                        <p class="desc" data-lang="zh">巧克力与咖啡</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Cold Brew</h3>
+                        <h3 data-lang="zh">冷萃咖啡</h3>
+                        <p class="price">¥26</p>
+                        <p class="desc" data-lang="en">Smooth & Refreshing</p>
+                        <p class="desc" data-lang="zh">清爽顺滑</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <div class="menu-category-title" data-lang="en">🍵 Tea & Others</div>
+                <div class="menu-category-title" data-lang="zh">🍵 茶饮及其他</div>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <h3 data-lang="en">Earl Grey</h3>
+                        <h3 data-lang="zh">伯爵红茶</h3>
+                        <p class="price">¥22</p>
+                        <p class="desc" data-lang="en">Bergamot Aroma</p>
+                        <p class="desc" data-lang="zh">佛手柑香气</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Matcha Latte</h3>
+                        <h3 data-lang="zh">抹茶拿铁</h3>
+                        <p class="price">¥28</p>
+                        <p class="desc" data-lang="en">Japanese Green Tea</p>
+                        <p class="desc" data-lang="zh">日式绿茶</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Hot Chocolate</h3>
+                        <h3 data-lang="zh">热巧克力</h3>
+                        <p class="price">¥25</p>
+                        <p class="desc" data-lang="en">Rich Cocoa</p>
+                        <p class="desc" data-lang="zh">浓郁可可</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Fresh Orange Juice</h3>
+                        <h3 data-lang="zh">鲜橙汁</h3>
+                        <p class="price">¥20</p>
+                        <p class="desc" data-lang="en">100% Natural</p>
+                        <p class="desc" data-lang="zh">100%纯天然</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <div class="menu-category-title" data-lang="en">🍰 Desserts</div>
+                <div class="menu-category-title" data-lang="zh">🍰 甜点</div>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <h3 data-lang="en">Tiramisu</h3>
+                        <h3 data-lang="zh">提拉米苏</h3>
+                        <p class="price">¥35</p>
+                        <p class="desc" data-lang="en">Classic Italian</p>
+                        <p class="desc" data-lang="zh">经典意大利</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Cheesecake</h3>
+                        <h3 data-lang="zh">芝士蛋糕</h3>
+                        <p class="price">¥32</p>
+                        <p class="desc" data-lang="en">Creamy & Smooth</p>
+                        <p class="desc" data-lang="zh">绵密柔滑</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Chocolate Cake</h3>
+                        <h3 data-lang="zh">巧克力蛋糕</h3>
+                        <p class="price">¥30</p>
+                        <p class="desc" data-lang="en">Dark Chocolate</p>
+                        <p class="desc" data-lang="zh">浓郁黑巧</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Fruit Tart</h3>
+                        <h3 data-lang="zh">水果塔</h3>
+                        <p class="price">¥28</p>
+                        <p class="desc" data-lang="en">Fresh Seasonal</p>
+                        <p class="desc" data-lang="zh">时令鲜果</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Cat-Shaped Cookie</h3>
+                        <h3 data-lang="zh">猫咪形曲奇</h3>
+                        <p class="price">¥15</p>
+                        <p class="desc" data-lang="en">Our Signature</p>
+                        <p class="desc" data-lang="zh">店内招牌</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Croissant</h3>
+                        <h3 data-lang="zh">牛角面包</h3>
+                        <p class="price">¥18</p>
+                        <p class="desc" data-lang="en">Buttery Flaky</p>
+                        <p class="desc" data-lang="zh">黄油酥脆</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <div class="menu-category-title" data-lang="en">🥗 Light Meals</div>
+                <div class="menu-category-title" data-lang="zh">🥗 轻食</div>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <h3 data-lang="en">Club Sandwich</h3>
+                        <h3 data-lang="zh">总汇三明治</h3>
+                        <p class="price">¥38</p>
+                        <p class="desc" data-lang="en">Triple Layer</p>
+                        <p class="desc" data-lang="zh">三层丰富</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Caesar Salad</h3>
+                        <h3 data-lang="zh">凯撒沙拉</h3>
+                        <p class="price">¥35</p>
+                        <p class="desc" data-lang="en">Fresh Greens</p>
+                        <p class="desc" data-lang="zh">新鲜蔬菜</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">Muffin & Coffee Set</h3>
+                        <h3 data-lang="zh">松饼咖啡套餐</h3>
+                        <p class="price">¥42</p>
+                        <p class="desc" data-lang="en">Perfect Combo</p>
+                        <p class="desc" data-lang="zh">完美搭配</p>
+                    </div>
+                    <div class="menu-item">
+                        <h3 data-lang="en">French Toast</h3>
+                        <h3 data-lang="zh">法式吐司</h3>
+                        <p class="price">¥32</p>
+                        <p class="desc" data-lang="en">Maple Syrup</p>
+                        <p class="desc" data-lang="zh">枫糖浆</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer-address">
+            <div class="address-icon">📍</div>
+            <h3 data-lang="en">Visit Our Café</h3>
+            <h3 data-lang="zh">欢迎来访</h3>
+            <p data-lang="en">123 Cat Café Street, Parisian District</p>
+            <p data-lang="zh">巴黎区猫咪咖啡街123号</p>
+            <p data-lang="en">Mon-Sun: 9:00 AM - 10:00 PM</p>
+            <p data-lang="zh">周一至周日：上午9点 - 晚上10点</p>
+            <p data-lang="en">Tel: +86 755-1234-5678</p>
+            <p data-lang="zh">电话：+86 755-1234-5678</p>
+        </div>
+
+        <section class="section">
+            <h2 data-lang="en">Meet Our Cats</h2>
+            <h2 data-lang="zh">认识我们的猫咪</h2>
+            <div class="table-scroll">
+            <table class="cafe-table">
+                <thead>
+                <tr>
+                    <th data-lang="en">Name</th>
+                    <th data-lang="zh">名字</th>
+                    <th data-lang="en">Breed</th>
+                    <th data-lang="zh">品种</th>
+                    <th data-lang="en">Personality</th>
+                    <th data-lang="zh">性格</th>
+                    <th data-lang="en">Status</th>
+                    <th data-lang="zh">状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td data-lang="en">Whiskers</td>
+                    <td data-lang="zh">威克斯</td>
+                    <td data-lang="en">British Shorthair</td>
+                    <td data-lang="zh">英国短毛猫</td>
+                    <td data-lang="en">Calm & Gentle</td>
+                    <td data-lang="zh">温顺安静</td>
+                    <td data-lang="en">Available</td>
+                    <td data-lang="zh">可领养</td>
+                </tr>
+                <tr>
+                    <td data-lang="en">Luna</td>
+                    <td data-lang="zh">露娜</td>
+                    <td data-lang="en">Scottish Fold</td>
+                    <td data-lang="zh">苏格兰折耳猫</td>
+                    <td data-lang="en">Playful & Affectionate</td>
+                    <td data-lang="zh">活泼亲人</td>
+                    <td data-lang="en">Available</td>
+                    <td data-lang="zh">可领养</td>
+                </tr>
+                <tr>
+                    <td data-lang="en">Mochi</td>
+                    <td data-lang="zh">摩西</td>
+                    <td data-lang="en">Maine Coon</td>
+                    <td data-lang="zh">缅因猫</td>
+                    <td data-lang="en">Friendly & Sociable</td>
+                    <td data-lang="zh">友善社交</td>
+                    <td data-lang="en">Resident</td>
+                    <td data-lang="zh">店猫</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+
+        <div class="cat-image">
+            <img src="5c854caadcf8609454d22a04a1df6826.jpg" alt="Cute Cat" width="200" height="200">
+        </div>
+
+        <div class="quote">
+            <p data-lang="en">In this café, every cup of coffee comes with a purr and a paw, creating moments of pure bliss.</p>
+            <p data-lang="zh">在这家咖啡馆，每一杯咖啡都伴随着呼噜声和猫爪，创造出纯粹的幸福时刻。</p>
+        </div>
+
+        <div class="divider">· · · · ·</div>
+
+        <section class="form-section">
+            <h2 data-lang="en">Start Your Journey</h2>
+            <h2 data-lang="zh">开始您的旅程</h2>
+            <form action="" id="journeyForm">
+                <div class="form-group">
+                    <label for="phone" data-lang="en">Your Contact Number</label>
+                    <label for="phone" data-lang="zh">您的联系电话</label>
+                    <input type="text" id="phone" data-placeholder-en="Please enter your phone number" data-placeholder-zh="请输入您的电话号码" placeholder="Please enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label data-lang="en">Gender Preference for Cat Companion</label>
+                    <label data-lang="zh">猫咪伙伴性别偏好</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="gender"> <span data-lang="en">Male</span><span data-lang="zh">公猫</span></label>
+                        <label><input type="radio" name="gender"> <span data-lang="en">Female</span><span data-lang="zh">母猫</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-lang="en">Taste Preferences</label>
+                    <label data-lang="zh">口味偏好</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="hobby"> <span data-lang="en">Sweet</span><span data-lang="zh">甜</span></label>
+                        <label><input type="checkbox" name="hobby"> <span data-lang="en">Salty</span><span data-lang="zh">咸</span></label>
+                        <label><input type="checkbox" name="hobby"> <span data-lang="en">Bitter</span><span data-lang="zh">苦</span></label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" data-lang="en">Start Your Taste Trip Now</button>
+                <button type="submit" class="submit-btn" data-lang="zh">立即开始您的美食之旅</button>
+            </form>
+        </section>
+
+        <div class="footer-link">
+            <a href="https://chat.deepseek.com" target="_blank" rel="noopener noreferrer" data-lang="en">Chat With Our AI Assistant</a>
+            <a href="https://chat.deepseek.com" target="_blank" rel="noopener noreferrer" data-lang="zh">与我们的AI助手聊天</a>
+        </div>
+
+        <div class="divider">· · · · ·</div>
+
+                <section class="comments-section">
+            <h2 data-lang="en">Guestbook</h2>
+            <h2 data-lang="zh">留言板</h2>
+            
+            <div class="comment-form">
+                <form id="commentForm">
+                    <div class="form-group">
+                        <input type="text" id="commentName" data-placeholder-en="Your Name" data-placeholder-zh="您的姓名" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="commentContent" data-placeholder-en="Share your thoughts with us..." data-placeholder-zh="分享您的想法..." placeholder="Share your thoughts with us..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" data-lang="en">Post Comment</button>
+                    <button type="submit" class="submit-btn" data-lang="zh">发表评论</button>
+                </form>
+            </div>
+
+            <div class="comments-list">
+                <h3 data-lang="en">Recent Comments</h3>
+                <h3 data-lang="zh">最新留言</h3>
+                <div id="commentsContainer">
+                    <p class="no-comments" data-lang="en">No comments yet. Be the first to share your thoughts!</p>
+                    <p class="no-comments" data-lang="zh">暂无留言，成为第一个分享想法的人吧！</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const body = document.body;
+        const commentForm = document.getElementById('commentForm');
+        const journeyForm = document.getElementById('journeyForm');
+        const commentsContainer = document.getElementById('commentsContainer');
+
+        if (journeyForm) {
+            journeyForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+            });
+        }
+
+        function updatePlaceholders(isZh) {
+            const phone = document.getElementById('phone');
+            if (phone) {
+                const key = isZh ? 'data-placeholder-zh' : 'data-placeholder-en';
+                phone.placeholder = phone.getAttribute(key) || '';
+            }
+            const commentName = document.getElementById('commentName');
+            const commentContent = document.getElementById('commentContent');
+            const pKey = isZh ? 'data-placeholder-zh' : 'data-placeholder-en';
+            if (commentName) {
+                commentName.placeholder = commentName.getAttribute(pKey) || '';
+            }
+            if (commentContent) {
+                commentContent.placeholder = commentContent.getAttribute(pKey) || '';
+            }
+        }
+
+        function applyLanguage(targetLang) {
+            const isZh = targetLang === 'zh';
+            langBtns.forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-target-lang') === targetLang);
+            });
+            body.classList.toggle('zh', isZh);
+            document.documentElement.lang = isZh ? 'zh-CN' : 'en';
+            try {
+                localStorage.setItem('catCoffeeLang', targetLang);
+            } catch (e) { /* ignore quota / private mode */ }
+            updatePlaceholders(isZh);
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                applyLanguage(btn.getAttribute('data-target-lang'));
+            });
+        });
+
+        function loadComments() {
+            let comments = [];
+            try {
+                comments = JSON.parse(localStorage.getItem('catCoffeeComments') || '[]');
+                if (!Array.isArray(comments)) {
+                    comments = [];
+                }
+            } catch (e) {
+                comments = [];
+            }
+            if (comments.length === 0) {
+                return;
+            }
+
+            commentsContainer.replaceChildren();
+            comments.forEach(comment => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment-item';
+
+                const header = document.createElement('div');
+                header.className = 'comment-header';
+
+                const author = document.createElement('span');
+                author.className = 'comment-author';
+                author.textContent = comment.name != null ? String(comment.name) : '';
+
+                const dateEl = document.createElement('span');
+                dateEl.className = 'comment-date';
+                dateEl.textContent = comment.date != null ? String(comment.date) : '';
+
+                header.appendChild(author);
+                header.appendChild(dateEl);
+
+                const contentP = document.createElement('p');
+                contentP.className = 'comment-content';
+                contentP.textContent = comment.content != null ? String(comment.content) : '';
+
+                commentEl.appendChild(header);
+                commentEl.appendChild(contentP);
+                commentsContainer.appendChild(commentEl);
+            });
+        }
+
+        function saveComment(name, content) {
+            let comments = [];
+            try {
+                comments = JSON.parse(localStorage.getItem('catCoffeeComments') || '[]');
+                if (!Array.isArray(comments)) {
+                    comments = [];
+                }
+            } catch (e) {
+                comments = [];
+            }
+            const isZh = document.body.classList.contains('zh');
+
+            comments.unshift({
+                name: name,
+                content: content,
+                date: new Date().toLocaleDateString(isZh ? 'zh-CN' : 'en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })
+            });
+
+            localStorage.setItem('catCoffeeComments', JSON.stringify(comments));
+            loadComments();
+        }
+
+        commentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('commentName').value.trim();
+            const content = document.getElementById('commentContent').value.trim();
+
+            if (name && content) {
+                saveComment(name, content);
+                commentForm.reset();
+                updatePlaceholders(body.classList.contains('zh'));
+            }
+        });
+
+        let initialLang = 'en';
+        try {
+            const saved = localStorage.getItem('catCoffeeLang');
+            if (saved === 'zh' || saved === 'en') {
+                initialLang = saved;
+            }
+        } catch (e) { /* ignore */ }
+        applyLanguage(initialLang);
+
+        loadComments();
+    </script>
+</body>
+</html>
