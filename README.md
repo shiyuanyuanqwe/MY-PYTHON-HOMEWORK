@@ -1,2 +1,2 @@
-# MY-PYTHON-HOMEWORK
-A respository for a high school student Python beginner
+# MY-CODING-HOMEWORK
+A respository of a high school student coding beginner
